@@ -8,24 +8,30 @@ const dataRoute = express.Router();
 
 
 dataRoute.post("/calculate", async (req, res) => {
-    const { annualAmount, annualInterestRate, years } = req.body;
 
-        let middle=(1+(annualInterestRate/100))**years
-        let lastMiddle=middle-1;
+    const { AnnualInstalmentAmount, AnnualInterestRate, TotalNumberofYears } = req.body;
+    console.log(req.body)
 
-        let f=annualAmount*(lastMiddle/(annualInterestRate/100))
+    const f=cal( AnnualInstalmentAmount, AnnualInterestRate, TotalNumberofYears)
+    const totalInvestmentAmount=AnnualInstalmentAmount*TotalNumberofYears
+    const totalInterestGained=f-totalInvestmentAmount;
 
-        let totalInvestmentAmount=annualAmount*years;
-        let totalInterestGained=f-totalInvestmentAmount;
+    let obj = {
+        TotalMaturityValue: f,
+        totalInvestmentAmount: totalInvestmentAmount,
+        totalInterestGained: totalInterestGained
+    }
 
-        let obj={
-            TotalMaturityValue:f,
-            totalInvestmentAmount:totalInvestmentAmount,
-            totalInterestGained:totalInterestGained
-        }
-
-        res.send({"msg":obj});
+    res.send({"msg":obj});
 })
+
+const cal = (annualA, annualI, years) => {
+    console.log(annualA,annualI,years)
+    annualI = annualI / 100
+    const res = Math.floor(annualA * (((annualI + 1) ** years - 1) / annualI));
+    console.log(res)
+    return res
+}
 
 
 
