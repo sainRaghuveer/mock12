@@ -13,7 +13,7 @@ dataRoute.post("/calculate", async (req, res) => {
         let middle=(1+(annualInterestRate/100))**years
         let lastMiddle=middle-1;
 
-        let f=annualAmount(lastMiddle/(annualInterestRate/100))
+        let f=annualAmount*(lastMiddle/(annualInterestRate/100))
 
         let totalInvestmentAmount=annualAmount*years;
         let totalInterestGained=f-totalInvestmentAmount;
