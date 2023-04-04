@@ -36,11 +36,11 @@ userRoute.post("/login", async (req, res) => {
     try {
         const user = await userModel.findOne({ email });
         console.log(user)
-        if (user.length>0) {
+        if (user) {
             console.log(user)
-            bcrypt.compare(password, user[0].password, (err, result)=> {
+            bcrypt.compare(password, user.password, (err, result)=> {
                 if (result) {
-                    var token = jwt.sign({user: user[0]._id}, 'grow', { expiresIn: '3h' });
+                    var token = jwt.sign({user: user._id}, 'grow', { expiresIn: '3h' });
                     res.send({"msg":"user logged in successful", "token":token});
                 } else {
                     res.send({ "msg": "Wrong password" });
