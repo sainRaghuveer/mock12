@@ -19,7 +19,7 @@ userRoute.post("/register", async (req, res) => {
                 if (err) {
                     res.send({ "msg": "Enter valid email or password" })
                 } else {
-                    const user = new userModel({ name, email, password: hash });
+                    const user = new userModel({ name, email, password: hash, time:new Date() });
                     user.save();
                     res.send({ "msg": "user registered successful" })
                 }
